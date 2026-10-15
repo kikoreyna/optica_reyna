@@ -20,10 +20,32 @@
         .muted { color: #6b7280; }
         .badge { display: inline-block; background: #dbeafe; color: #1e40af; padding: .1rem .6rem; border-radius: 999px; font-size: .8rem; margin-right: .3rem; }
         nav[role=navigation] svg { width: 1rem; height: 1rem; }
+        header nav { display: inline-flex; gap: 1.5rem; align-items: center; }
+        header nav a.activo { text-decoration: underline; }
+        .alerta { padding: .75rem 1rem; border-radius: 6px; margin-bottom: 1rem; }
+        .alerta-exito { background: #dcfce7; color: #166534; }
+        .error { color: #b91c1c; font-size: .85rem; margin: .25rem 0 0; }
+        label { display: block; font-weight: 600; margin-bottom: .35rem; }
+        .btn-secundario { background: #6b7280; }
+        .btn-peligro { background: #b91c1c; }
+        .acciones { display: flex; gap: .5rem; align-items: center; }
+        .acciones form { margin: 0; }
+        a.boton { display: inline-block; padding: .5rem 1rem; background: #1e3a8a; color: #fff; border-radius: 6px; text-decoration: none; font-size: .9rem; }
     </style>
 </head>
 <body>
-    <header><a href="{{ route('pacientes.index') }}">Óptica Reyna</a></header>
-    <main>@yield('content')</main>
+    <header>
+        <nav>
+            <a href="{{ route('pacientes.index') }}">Óptica Reyna</a>
+            <a href="{{ route('pacientes.index') }}" class="{{ request()->routeIs('pacientes.*') ? 'activo' : '' }}" style="font-size:1rem">Pacientes</a>
+            <a href="{{ route('enfermedades.index') }}" class="{{ request()->routeIs('enfermedades.*') ? 'activo' : '' }}" style="font-size:1rem">Enfermedades</a>
+        </nav>
+    </header>
+    <main>
+        @if (session('exito'))
+            <div class="alerta alerta-exito">{{ session('exito') }}</div>
+        @endif
+        @yield('content')
+    </main>
 </body>
 </html>
