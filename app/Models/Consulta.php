@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Consultation extends Model
+class Consulta extends Model
 {
     use HasFactory;
 
+    protected $table = 'consultas';
+
     protected $fillable = [
-        'patient_id',
+        'paciente_id',
         'fecha_consulta',
         'motivo_consulta',
         'observaciones_clinicas',
@@ -29,13 +31,13 @@ class Consultation extends Model
         ];
     }
 
-    public function patient(): BelongsTo
+    public function paciente(): BelongsTo
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Paciente::class, 'paciente_id');
     }
 
-    public function refraction(): HasOne
+    public function refraccion(): HasOne
     {
-        return $this->hasOne(Refraction::class);
+        return $this->hasOne(Refraccion::class, 'consulta_id');
     }
 }

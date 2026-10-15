@@ -10,21 +10,21 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('consultations', function (Blueprint $table): void {
+        Schema::create('consultas', function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('patient_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('paciente_id')->constrained('pacientes')->cascadeOnDelete();
             $table->dateTime('fecha_consulta');
             $table->text('motivo_consulta');
             $table->text('observaciones_clinicas')->nullable();
             $table->date('proxima_cita')->nullable();
             $table->timestamps();
 
-            $table->index(['patient_id', 'fecha_consulta']);
+            $table->index(['paciente_id', 'fecha_consulta']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('consultations');
+        Schema::dropIfExists('consultas');
     }
 };

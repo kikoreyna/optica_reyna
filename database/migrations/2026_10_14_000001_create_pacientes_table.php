@@ -10,18 +10,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('disease_patient', function (Blueprint $table): void {
+        Schema::create('pacientes', function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('disease_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('patient_id')->constrained()->cascadeOnDelete();
+            $table->string('nombre');
+            $table->string('telefono')->nullable();
+            $table->text('direccion')->nullable();
+            $table->date('fecha_nacimiento');
             $table->timestamps();
-
-            $table->unique(['disease_id', 'patient_id']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('disease_patient');
+        Schema::dropIfExists('pacientes');
     }
 };

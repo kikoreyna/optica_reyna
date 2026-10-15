@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Patient extends Model
+class Paciente extends Model
 {
     use HasFactory;
+
+    protected $table = 'pacientes';
 
     protected $fillable = [
         'nombre',
@@ -35,18 +37,19 @@ class Patient extends Model
         );
     }
 
-    public function diseases(): BelongsToMany
+    public function enfermedades(): BelongsToMany
     {
-        return $this->belongsToMany(Disease::class)->withTimestamps();
+        return $this->belongsToMany(Enfermedad::class, 'enfermedad_paciente', 'paciente_id', 'enfermedad_id')
+            ->withTimestamps();
     }
 
-    public function consultations(): HasMany
+    public function consultas(): HasMany
     {
-        return $this->hasMany(Consultation::class);
+        return $this->hasMany(Consulta::class, 'paciente_id');
     }
 
-    public function refractions(): HasMany
+    public function refracciones(): HasMany
     {
-        return $this->hasMany(Refraction::class);
+        return $this->hasMany(Refraccion::class, 'paciente_id');
     }
 }

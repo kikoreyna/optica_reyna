@@ -8,16 +8,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Disease extends Model
+class Enfermedad extends Model
 {
     use HasFactory;
 
+    protected $table = 'enfermedades';
+
     protected $fillable = [
-        'nombre_enfermedad',
+        'nombre',
     ];
 
-    public function patients(): BelongsToMany
+    public function pacientes(): BelongsToMany
     {
-        return $this->belongsToMany(Patient::class)->withTimestamps();
+        return $this->belongsToMany(Paciente::class, 'enfermedad_paciente', 'enfermedad_id', 'paciente_id')
+            ->withTimestamps();
     }
 }

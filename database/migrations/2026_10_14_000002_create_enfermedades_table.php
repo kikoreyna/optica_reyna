@@ -10,15 +10,15 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('diseases', function (Blueprint $table): void {
+        Schema::create('enfermedades', function (Blueprint $table): void {
             $table->id();
-            $table->string('nombre_enfermedad');
+            $table->string('nombre')->unique();
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('diseases');
+        Schema::dropIfExists('enfermedades');
     }
 };

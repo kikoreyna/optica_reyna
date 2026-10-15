@@ -10,10 +10,10 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('refractions', function (Blueprint $table): void {
+        Schema::create('refracciones', function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('consultation_id')->unique()->constrained()->cascadeOnDelete();
-            $table->foreignId('patient_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('consulta_id')->unique()->constrained('consultas')->cascadeOnDelete();
+            $table->foreignId('paciente_id')->constrained('pacientes')->cascadeOnDelete();
 
             // Ojo derecho
             $table->decimal('od_esferico', 4, 2)->nullable();
@@ -39,6 +39,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('refractions');
+        Schema::dropIfExists('refracciones');
     }
 };

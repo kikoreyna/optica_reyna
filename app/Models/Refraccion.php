@@ -8,13 +8,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Refraction extends Model
+class Refraccion extends Model
 {
     use HasFactory;
 
+    public const PADECIMIENTOS = ['Miopía', 'Hipermetropía', 'Astigmatismo', 'Presbicia'];
+
+    protected $table = 'refracciones';
+
     protected $fillable = [
-        'consultation_id',
-        'patient_id',
+        'consulta_id',
+        'paciente_id',
         'od_esferico',
         'od_cilindro',
         'od_eje',
@@ -48,13 +52,13 @@ class Refraction extends Model
         ];
     }
 
-    public function consultation(): BelongsTo
+    public function consulta(): BelongsTo
     {
-        return $this->belongsTo(Consultation::class);
+        return $this->belongsTo(Consulta::class, 'consulta_id');
     }
 
-    public function patient(): BelongsTo
+    public function paciente(): BelongsTo
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Paciente::class, 'paciente_id');
     }
 }
