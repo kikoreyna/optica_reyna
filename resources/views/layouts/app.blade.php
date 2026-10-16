@@ -38,12 +38,16 @@
         <nav>
             <a href="{{ route('pacientes.index') }}">Óptica Reyna</a>
             <a href="{{ route('pacientes.index') }}" class="{{ request()->routeIs('pacientes.*') ? 'activo' : '' }}" style="font-size:1rem">Pacientes</a>
+            <a href="{{ route('ventas.index') }}" class="{{ request()->routeIs('ventas.*') ? 'activo' : '' }}" style="font-size:1rem">Compras</a>
             <a href="{{ route('enfermedades.index') }}" class="{{ request()->routeIs('enfermedades.*') ? 'activo' : '' }}" style="font-size:1rem">Enfermedades</a>
         </nav>
     </header>
     <main>
         @if (session('exito'))
             <div class="alerta alerta-exito">{{ session('exito') }}</div>
+        @endif
+        @if (session('error'))
+            <div class="alerta" style="background:#fee2e2; color:#991b1b">{{ session('error') }}</div>
         @endif
         @yield('content')
     </main>

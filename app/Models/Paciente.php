@@ -52,4 +52,9 @@ class Paciente extends Model
     {
         return $this->hasMany(Refraccion::class, 'paciente_id');
     }
+
+    public function ventas(): HasMany
+    {
+        return $this->hasMany(Venta::class, 'paciente_id');
+    }
 }

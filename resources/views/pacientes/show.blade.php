@@ -33,6 +33,29 @@
     </div>
 
     <div style="display:flex; justify-content:space-between; align-items:center">
+        <h3>Historial de compras</h3>
+        <a class="boton" href="{{ route('pacientes.ventas.create', $paciente) }}">Registrar compra</a>
+    </div>
+    <div class="card">
+        <table>
+            <thead><tr><th>Fecha</th><th>Productos</th><th>Pago</th><th>Total</th><th></th></tr></thead>
+            <tbody>
+                @forelse ($paciente->ventas as $venta)
+                    <tr>
+                        <td>{{ $venta->fecha_venta->format('d/m/Y') }}</td>
+                        <td>{{ $venta->partidas->count() }}</td>
+                        <td>{{ ucfirst($venta->metodo_pago) }}</td>
+                        <td>${{ number_format((float) $venta->total, 2) }}</td>
+                        <td><a href="{{ route('ventas.show', $venta) }}">Ver detalle</a></td>
+                    </tr>
+                @empty
+                    <tr><td colspan="5" class="muted">Este paciente aún no tiene compras registradas.</td></tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center">
         <h3>Historial de consultas</h3>
         <a class="boton" href="{{ route('pacientes.consultas.create', $paciente) }}">Nueva consulta</a>
     </div>

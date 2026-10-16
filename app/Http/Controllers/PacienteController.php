@@ -29,7 +29,7 @@ class PacienteController extends Controller
 
     public function create(): View
     {
-        return view('pacientes.create', $this->datosFormulario(new Paciente()));
+        return view('pacientes.create', $this->datosFormulario(new Paciente));
     }
 
     public function store(Request $request): RedirectResponse
@@ -48,6 +48,8 @@ class PacienteController extends Controller
             'enfermedades',
             'consultas' => fn ($consulta) => $consulta->latest('fecha_consulta'),
             'consultas.refraccion',
+            'ventas' => fn ($venta) => $venta->latest('fecha_venta'),
+            'ventas.partidas',
         ]);
 
         return view('pacientes.show', compact('paciente'));
@@ -70,6 +72,11 @@ class PacienteController extends Controller
 
     public function destroy(Paciente $paciente): RedirectResponse
     {
+        if ($paciente->ventas()->exists()) {
+            return redirect()->route('pacientes.show', $paciente)
+                ->with('error', 'No se puede eliminar un paciente con compras registradas.');
+        }
+
         $paciente->delete();
 
         return redirect()->route('pacientes.index')->with('exito', 'Paciente eliminado correctamente.');
