@@ -50,7 +50,7 @@
 
         @if ($saldoCentavos > 0)
             <h3>Registrar abono</h3>
-            <form method="POST" action="{{ route('ventas.abonos.store', $venta) }}" class="card" style="background:#f9fafb">
+            <form method="POST" action="{{ route('ventas.abonos.store', $venta) }}" class="card" style="background:#EAF7FB">
                 @csrf
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem">
                     <div>
