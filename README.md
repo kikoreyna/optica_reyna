@@ -57,3 +57,21 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Usuarios y acceso
+
+El sistema requiere iniciar sesión para acceder a pacientes, consultas, compras y enfermedades.
+Las cuentas tienen uno de estos roles: `administrador` o `empleado`. Ambos pueden usar los módulos
+operativos; solo el administrador puede crear, editar, asignar roles y eliminar usuarios.
+
+Para crear el primer administrador, configura `ADMIN_NAME`, `ADMIN_EMAIL` y `ADMIN_PASSWORD` en
+`.env` (usa una contraseña segura de al menos 8 caracteres) y ejecuta:
+
+```sh
+php artisan migrate --force
+php artisan db:seed
+```
+
+El sembrador crea la cuenta solo si ese correo todavía no existe; no restablece contraseñas al
+volver a ejecutarlo. Si las tres variables quedan vacías, no se crea una cuenta administrativa.
+Después inicia sesión en `/login`. No hay registro público de usuarios.

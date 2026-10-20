@@ -1,11 +1,16 @@
 <?php
 
 use App\Models\Paciente;
+use App\Models\User;
 use App\Models\Venta;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    $this->actingAs(User::factory()->create());
+});
 
 function crearPacienteParaVenta(array $extra = []): Paciente
 {

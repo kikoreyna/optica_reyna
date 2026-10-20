@@ -1,9 +1,14 @@
 <?php
 
 use App\Models\Enfermedad;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    $this->actingAs(User::factory()->create());
+});
 
 it('lista el catálogo de enfermedades', function () {
     Enfermedad::create(['nombre' => 'Glaucoma']);

@@ -31,15 +31,30 @@
         .acciones { display: flex; gap: .5rem; align-items: center; }
         .acciones form { margin: 0; }
         a.boton { display: inline-block; padding: .5rem 1rem; background: #1e3a8a; color: #fff; border-radius: 6px; text-decoration: none; font-size: .9rem; }
+        input, select { padding: .5rem; border: 1px solid #d1d5db; border-radius: 6px; }
+        .campo { width: min(100%, 360px); }
+        .nav-derecha { margin-left: auto; }
     </style>
 </head>
 <body>
     <header>
         <nav>
-            <a href="{{ route('pacientes.index') }}">Óptica Reyna</a>
-            <a href="{{ route('pacientes.index') }}" class="{{ request()->routeIs('pacientes.*') ? 'activo' : '' }}" style="font-size:1rem">Pacientes</a>
-            <a href="{{ route('ventas.index') }}" class="{{ request()->routeIs('ventas.*') ? 'activo' : '' }}" style="font-size:1rem">Compras</a>
-            <a href="{{ route('enfermedades.index') }}" class="{{ request()->routeIs('enfermedades.*') ? 'activo' : '' }}" style="font-size:1rem">Enfermedades</a>
+            @auth
+                <a href="{{ route('pacientes.index') }}">Óptica Reyna</a>
+                <a href="{{ route('pacientes.index') }}" class="{{ request()->routeIs('pacientes.*') ? 'activo' : '' }}" style="font-size:1rem">Pacientes</a>
+                <a href="{{ route('ventas.index') }}" class="{{ request()->routeIs('ventas.*') ? 'activo' : '' }}" style="font-size:1rem">Compras</a>
+                <a href="{{ route('enfermedades.index') }}" class="{{ request()->routeIs('enfermedades.*') ? 'activo' : '' }}" style="font-size:1rem">Enfermedades</a>
+                @if (auth()->user()->isAdministrator())
+                    <a href="{{ route('usuarios.index') }}" class="{{ request()->routeIs('usuarios.*') ? 'activo' : '' }}" style="font-size:1rem">Usuarios</a>
+                @endif
+                <span class="nav-derecha" style="font-size:.9rem">{{ auth()->user()->name }} ({{ auth()->user()->role }})</span>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn-secundario">Cerrar sesión</button>
+                </form>
+            @else
+                <a href="{{ route('login') }}">Óptica Reyna</a>
+            @endauth
         </nav>
     </header>
     <main>
