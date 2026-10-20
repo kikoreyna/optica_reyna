@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Óptica Reyna')</title>
+    <title>@yield('title', $empresa?->nombre ?? 'Óptica Reyna')</title>
+    <link rel="icon" type="{{ $empresa?->logo_path ? (str_ends_with($empresa->logo_path, '.webp') ? 'image/webp' : (str_ends_with($empresa->logo_path, '.png') ? 'image/png' : 'image/jpeg')) : 'image/x-icon' }}" href="{{ $empresa?->logo_path ? route('empresa.logo') : asset('favicon.ico') }}">
     <style>
         :root { --color-primario: #BFEAF2; --color-fondo: #EAF7FB; --color-texto: #173B45; --color-enlace: #145365; }
         * { box-sizing: border-box; }
@@ -35,18 +36,26 @@
         input, select { padding: .5rem; border: 1px solid #d1d5db; border-radius: 6px; }
         .campo { width: min(100%, 360px); }
         .nav-derecha { margin-left: auto; }
+        .marca { display: inline-flex; align-items: center; gap: .65rem; }
+        .logo-empresa { width: 42px; height: 42px; object-fit: contain; border-radius: 6px; background: #fff; }
     </style>
 </head>
 <body>
     <header>
         <nav>
             @auth
-                <a href="{{ route('pacientes.index') }}">Óptica Reyna</a>
+                <a class="marca" href="{{ route('pacientes.index') }}">
+                    @if ($empresa?->logo_path)
+                        <img class="logo-empresa" src="{{ route('empresa.logo') }}" alt="Logo de {{ $empresa->nombre }}">
+                    @endif
+                    <span>{{ $empresa?->nombre ?? 'Óptica Reyna' }}</span>
+                </a>
                 <a href="{{ route('pacientes.index') }}" class="{{ request()->routeIs('pacientes.*') ? 'activo' : '' }}" style="font-size:1rem">Pacientes</a>
                 <a href="{{ route('ventas.index') }}" class="{{ request()->routeIs('ventas.*') ? 'activo' : '' }}" style="font-size:1rem">Compras</a>
                 <a href="{{ route('enfermedades.index') }}" class="{{ request()->routeIs('enfermedades.*') ? 'activo' : '' }}" style="font-size:1rem">Enfermedades</a>
                 @if (auth()->user()->isAdministrator())
                     <a href="{{ route('usuarios.index') }}" class="{{ request()->routeIs('usuarios.*') ? 'activo' : '' }}" style="font-size:1rem">Usuarios</a>
+                    <a href="{{ route('empresa.edit') }}" class="{{ request()->routeIs('empresa.*') ? 'activo' : '' }}" style="font-size:1rem">Empresa</a>
                 @endif
                 <span class="nav-derecha" style="font-size:.9rem">{{ auth()->user()->name }} ({{ auth()->user()->role }})</span>
                 <form method="POST" action="{{ route('logout') }}">
@@ -54,7 +63,12 @@
                     <button type="submit" class="btn-secundario">Cerrar sesión</button>
                 </form>
             @else
-                <a href="{{ route('login') }}">Óptica Reyna</a>
+                <a class="marca" href="{{ route('login') }}">
+                    @if ($empresa?->logo_path)
+                        <img class="logo-empresa" src="{{ route('empresa.logo') }}" alt="Logo de {{ $empresa->nombre }}">
+                    @endif
+                    <span>{{ $empresa?->nombre ?? 'Óptica Reyna' }}</span>
+                </a>
             @endauth
         </nav>
     </header>

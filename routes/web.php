@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ConsultaController;
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EnfermedadController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\UserController;
@@ -15,6 +16,8 @@ Route::middleware('guest')->group(function () {
         ->name('login.store');
 });
 
+Route::get('empresa/logo', [EmpresaController::class, 'logo'])->name('empresa.logo');
+
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
@@ -24,6 +27,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('usuarios', UserController::class)
             ->parameters(['usuarios' => 'usuario'])
             ->except('show');
+        Route::get('empresa', [EmpresaController::class, 'edit'])->name('empresa.edit');
+        Route::put('empresa', [EmpresaController::class, 'update'])->name('empresa.update');
     });
 
     Route::resource('pacientes', PacienteController::class)

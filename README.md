@@ -75,3 +75,7 @@ php artisan db:seed
 El sembrador crea la cuenta solo si ese correo todavía no existe; no restablece contraseñas al
 volver a ejecutarlo. Si las tres variables quedan vacías, no se crea una cuenta administrativa.
 Después inicia sesión en `/login`. No hay registro público de usuarios.
+
+El administrador puede actualizar el nombre, razón social, RFC, medios de contacto y logo desde
+**Empresa**. El logo JPG, PNG o WebP (máximo 2 MB) se muestra en el encabezado y se sirve como
+favicon. La tabla de empresa se crea al ejecutar las migraciones.
